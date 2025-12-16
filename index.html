@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redmond Family Lights</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/tRrLjND9/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://i.postimg.cc/P5Dc1sHq/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/7LgFrvtR/favicon-16x16.png">
+
+    <meta property="og:title" content="Redmond Family Lights - Tune to 91.1 FM" />
+    <meta property="og:description" content="Vote for the next song and watch the lights dance!" />
+    <meta property="og:image" content="https://i.postimg.cc/nLt45NDM/maps-icon.png" />
+    <meta property="og:type" content="website" />
+
+    <style>
+        /* This CSS ensures the iframe takes up the full screen on mobile without double scrollbars */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents the 'double scrollbar' effect */
+            background-color: #BF2C31; /* Matches your background color while loading */
+        }
+        
+        iframe {
+            display: block;
+            background: #BF2C31;
+            border: none;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe 
+        src="https://redmondfamilylights.remotefalcon.com" 
+        name="Remote Falcon" 
+        allow="geolocation" 
+        title="Redmond Family Lights Viewer">
+    </iframe>
+
+</body>
+</html>
