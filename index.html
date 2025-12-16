@@ -5,34 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Redmond Family Lights</title>
     
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/tRrLjND9/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://i.postimg.cc/P5Dc1sHq/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/7LgFrvtR/favicon-16x16.png">
+
+    <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Fredericka the Great|Comfortaa|Rock Salt' rel='stylesheet'>
+
+    <!-- SEO / Sharing -->
+    <meta property="og:title" content="Redmond Family Lights - Tune to 91.1 FM" />
+    <meta property="og:description" content="Vote for the next song and watch the lights dance!" />
+    <meta property="og:image" content="https://i.postimg.cc/nLt45NDM/maps-icon.png" />
     
     <style>
-        /* BASE SETUP */
+        /* --- LAYOUT CONFIGURATION --- */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            background-color: #BF2C31; /* Your base red */
+            background-color: #BF2C31; /* Base Red Background */
             font-family: 'Fredericka the Great', cursive;
             color: #FFFFFF;
-            overflow: hidden; /* Prevent main page scroll, let iframe scroll */
+            overflow: hidden; /* Prevents the main window from scrolling */
+            display: flex;
+            flex-direction: column; /* Stacks Header on top of App */
+        }
+
+        a, a:visited {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        /* --- HEADER SECTION --- 
+           Using Flexbox for Left/Center/Right layout */
+        #main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertically center everything */
+            padding: 5px 15px;
+            flex-shrink: 0; 
+            z-index: 10;
+            background-color: #BF2C31; 
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            min-height: 80px; /* Ensures consistent height */
+        }
+
+        /* Columns */
+        .header-left, .header-right {
+            flex: 0 0 100px; /* Fixed width for sides to keep center perfectly centered */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-center {
+            flex: 1; /* Takes up all remaining space */
+            text-align: center;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
-        /* HEADER SECTION */
-        #main-header {
+        /* Text Styling */
+        .show-title {
+            font-size: 28px; 
+            font-family: 'Rock Salt', cursive;
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+
+        .show-details {
+            font-size: 14px; 
+            font-family: 'Comfortaa', cursive;
+            line-height: 1.4;
+        }
+
+        /* --- DONATE BUTTON --- */
+        .donate-btn {
+            background-color: #FFD700; /* Gold */
+            color: #BF2C31 !important; /* Red text */
+            font-family: 'Rock Salt', cursive;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 2px solid #FFFFFF;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
             text-align: center;
-            padding: 10px;
-            flex-shrink: 0; /* Prevents header from shrinking */
-            z-index: 10;
+            white-space: nowrap; /* Prevents text wrapping */
         }
 
-        /* IFRAME CONTAINER */
+        .donate-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* QR Code Image */
+        .donate-qr-img {
+            height: 80px;
+            width: 80px;
+            border-radius: 5px;
+            border: 2px solid white;
+            display: block;
+        }
+
+        /* --- APP CONTAINER --- */
         #app-container {
-            flex-grow: 1; /* Takes up all remaining space */
+            flex-grow: 1; 
             width: 100%;
             position: relative;
             z-index: 5;
@@ -45,10 +127,10 @@
             display: block;
         }
 
-        /* SNOW EFFECT (Overlay on top of everything) */
+        /* --- SNOW EFFECT --- */
         .snow {
             position: fixed;
-            pointer-events: none; /* CLICKS PASS THROUGH TO IFRAME */
+            pointer-events: none; 
             top: 0; left: 0; right: 0; bottom: 0;
             height: 100vh;
             background-image: url('https://s3-eu-west-1.amazonaws.com/static-ressources/s1.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s2.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s3.png');
@@ -56,36 +138,98 @@
             animation: snow 10s linear infinite;
         }
 
-        /* Snow Keyframes */
         @keyframes snow {
             0% { background-position: 0px 0px, 0px 0px, 0px 0px; }
             50% { background-position: 500px 500px, 100px 200px, -100px 150px; }
             100% { background-position: 500px 1000px, 200px 400px, -100px 300px; }
         }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        
+        /* Mobile Layout (< 600px) */
+        @media (max-width: 600px) {
+            #main-header {
+                flex-wrap: wrap; /* Allows wrapping on tiny screens */
+                padding: 10px;
+                min-height: auto;
+                justify-content: center; /* Centers items when wrapped */
+            }
+            
+            .header-left {
+                order: 2; /* Put button below title */
+                flex: 0 0 auto;
+                width: auto;
+                margin-top: 5px;
+            }
+
+            .header-center {
+                order: 1; /* Title on top */
+                flex: 0 0 100%; /* Force full width */
+                margin-bottom: 5px;
+            }
+
+            .header-right {
+                display: none; /* Hide QR on mobile to save space */
+            }
+
+            .show-title { font-size: 24px; }
+            .show-details { font-size: 13px; }
+            .donate-btn { font-size: 14px; padding: 6px 15px; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- 1. STATIC HEADER (Hosted on GitHub) -->
     <div id="main-header">
-        <div style="font-size: 40px; font-family: 'Rock Salt', cursive;">
-            Redmond Family Lights
-        </div>
-        <div style="font-size: 18px; font-family: 'Comfortaa', cursive;">
-            <a href="https://goo.gl/maps/iT3QesfKkLN6ZFWT6" style="color: white; text-decoration: none;">
-                195 Burnyeat St, Truro NS
+        
+        <!-- LEFT: Donate Button -->
+        <div class="header-left">
+            <a href="https://www.zeffy.com/en-CA/donation-form/redmond-family-lights-christmas-index" target="_blank" class="donate-btn">
+                Donate
             </a>
         </div>
-        <div style="font-size: 24px; font-family: 'Comfortaa', cursive;">91.1 FM</div>
+
+        <!-- CENTER: Show Info -->
+        <div class="header-center">
+            <div class="show-title">
+                Redmond Family Lights
+            </div>
+            
+            <div style="margin: 2px 0;">
+                <a href="https://goo.gl/maps/iT3QesfKkLN6ZFWT6" target="_blank">
+                    <img src="https://i.postimg.cc/nLt45NDM/maps-icon.png" alt="Map" style="height: 20px; vertical-align: middle; margin-right: 3px;">
+                    <span class="show-details">195 Burnyeat St, Truro NS</span>
+                </a>
+            </div>
+
+            <div class="show-details" style="font-weight: bold; font-size: 18px; color: #FFD700;">
+                Tune to 91.1 FM
+            </div>
+        </div>
+
+        <!-- RIGHT: QR Code -->
+        <div class="header-right">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.zeffy.com/en-CA/donation-form/redmond-family-lights-christmas-index" 
+                 alt="Donate QR" class="donate-qr-img">
+        </div>
+
     </div>
 
+    <!-- 2. DYNAMIC CONTENT (The Iframe) -->
     <div id="app-container">
+        <!-- 
+           TODO: Replace 'YOUR_REMOTE_FALCON_USERNAME' with your actual username.
+           Example: https://remotefalcon.com/u/redmondfamilylights
+        -->
         <iframe 
-            src="https://remotefalcon.com/u/YOUR_REMOTE_FALCON_USERNAME" 
+            src="https://redmondfamilylights.remotefalcon.com" 
             allowtransparency="true"
             title="Voting Controls">
         </iframe>
     </div>
 
+    <!-- 3. SNOW OVERLAY -->
     <div class="snow"></div>
 
 </body>
