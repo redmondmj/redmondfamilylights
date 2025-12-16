@@ -5,67 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Redmond Family Lights</title>
     
-    <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/tRrLjND9/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://i.postimg.cc/P5Dc1sHq/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/7LgFrvtR/favicon-16x16.png">
-
-    <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Fredericka the Great|Comfortaa|Rock Salt' rel='stylesheet'>
-
-    <!-- SEO / Sharing -->
-    <meta property="og:title" content="Redmond Family Lights - Tune to 91.1 FM" />
-    <meta property="og:description" content="Vote for the next song and watch the lights dance!" />
-    <meta property="og:image" content="https://i.postimg.cc/nLt45NDM/maps-icon.png" />
     
     <style>
-        /* --- LAYOUT CONFIGURATION --- */
+        /* BASE SETUP */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            background-color: #BF2C31; /* Base Red Background */
+            background-color: #BF2C31; /* Your base red */
             font-family: 'Fredericka the Great', cursive;
             color: #FFFFFF;
-            overflow: hidden; /* Prevents the main window from scrolling */
+            overflow: hidden; /* Prevent main page scroll, let iframe scroll */
             display: flex;
-            flex-direction: column; /* Stacks Header on top of App */
+            flex-direction: column;
         }
 
-        a, a:visited {
-            color: #FFFFFF;
-            text-decoration: none;
-        }
-
-        /* --- HEADER SECTION --- 
-           This stays stuck to the top of the screen */
+        /* HEADER SECTION */
         #main-header {
             text-align: center;
-            padding: 10px 0;
-            flex-shrink: 0; /* Prevents header from collapsing */
+            padding: 10px;
+            flex-shrink: 0; /* Prevents header from shrinking */
             z-index: 10;
-            background-color: #BF2C31; /* Ensures header is opaque over any potential content */
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2); /* Subtle shadow for depth */
         }
 
-        .show-title {
-            font-size: 32px; 
-            font-family: 'Rock Salt', cursive;
-            line-height: 1.2;
-            margin-bottom: 5px;
-        }
-
-        .show-details {
-            font-size: 16px; 
-            font-family: 'Comfortaa', cursive;
-            line-height: 1.5;
-        }
-
-        /* --- APP CONTAINER --- 
-           This takes up all remaining space and holds the iframe */
+        /* IFRAME CONTAINER */
         #app-container {
-            flex-grow: 1; 
+            flex-grow: 1; /* Takes up all remaining space */
             width: 100%;
             position: relative;
             z-index: 5;
@@ -78,11 +45,10 @@
             display: block;
         }
 
-        /* --- SNOW EFFECT --- 
-           Overlays everything but allows clicks to pass through */
+        /* SNOW EFFECT (Overlay on top of everything) */
         .snow {
             position: fixed;
-            pointer-events: none; /* CRITICAL: Allows you to click buttons behind the snow */
+            pointer-events: none; /* CLICKS PASS THROUGH TO IFRAME */
             top: 0; left: 0; right: 0; bottom: 0;
             height: 100vh;
             background-image: url('https://s3-eu-west-1.amazonaws.com/static-ressources/s1.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s2.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s3.png');
@@ -90,55 +56,36 @@
             animation: snow 10s linear infinite;
         }
 
+        /* Snow Keyframes */
         @keyframes snow {
             0% { background-position: 0px 0px, 0px 0px, 0px 0px; }
             50% { background-position: 500px 500px, 100px 200px, -100px 150px; }
             100% { background-position: 500px 1000px, 200px 400px, -100px 300px; }
         }
-
-        /* Mobile Optimization for smaller headers */
-        @media (max-width: 600px) {
-            .show-title { font-size: 24px; }
-            .show-details { font-size: 14px; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- 1. STATIC HEADER (Hosted on GitHub) -->
     <div id="main-header">
-        <div class="show-title">
+        <div style="font-size: 40px; font-family: 'Rock Salt', cursive;">
             Redmond Family Lights
         </div>
-        
-        <!-- Maps Icon and Address -->
-        <div style="margin: 5px 0;">
-            <a href="https://goo.gl/maps/iT3QesfKkLN6ZFWT6" target="_blank">
-                <img src="https://i.postimg.cc/nLt45NDM/maps-icon.png" alt="Map" style="height: 30px; vertical-align: middle;">
-                <span class="show-details">195 Burnyeat St, Truro NS</span>
+        <div style="font-size: 18px; font-family: 'Comfortaa', cursive;">
+            <a href="https://goo.gl/maps/iT3QesfKkLN6ZFWT6" style="color: white; text-decoration: none;">
+                195 Burnyeat St, Truro NS
             </a>
         </div>
-
-        <!-- FM Station -->
-        <div class="show-details" style="font-weight: bold; font-size: 20px;">
-            Tune to 91.1 FM
-        </div>
+        <div style="font-size: 24px; font-family: 'Comfortaa', cursive;">91.1 FM</div>
     </div>
 
-    <!-- 2. DYNAMIC CONTENT (The Iframe) -->
     <div id="app-container">
-        <!-- 
-           TODO: Replace 'YOUR_REMOTE_FALCON_USERNAME' with your actual username.
-           Example: https://remotefalcon.com/u/redmondfamilylights
-        -->
         <iframe 
-            src="https://redmondfamilylights.remotefalcon.com" 
+            src="https://remotefalcon.com/u/YOUR_REMOTE_FALCON_USERNAME" 
             allowtransparency="true"
             title="Voting Controls">
         </iframe>
     </div>
 
-    <!-- 3. SNOW OVERLAY -->
     <div class="snow"></div>
 
 </body>
